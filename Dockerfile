@@ -14,6 +14,10 @@ RUN apk add --no-cache docker-cli gmp
 WORKDIR /opt/myriad
 COPY --from=build /tmp/myriad .
 
+RUN addgroup root docker && \
+    rc-update add docker boot && \
+    service docker start
+
 EXPOSE 8081
 
 ENTRYPOINT ["./myriad"]
