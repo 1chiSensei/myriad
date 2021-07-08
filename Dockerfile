@@ -7,16 +7,15 @@ RUN apk add --no-cache curl tar gzip docker
 WORKDIR /tmp/myriad
 RUN curl -OL https://github.com/1Computer1/myriad/releases/download/${MYRIAD_VERSION}/myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
     tar -xzf myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
-    rm -f myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz
+    rm -f myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
+    addgroup root docker && \
+    rc-update add docker boot && \
+    service docker start
 
 FROM frolvlad/alpine-glibc:latest
 RUN apk add --no-cache docker-cli gmp
 WORKDIR /opt/myriad
 COPY --from=build /tmp/myriad .
-
-RUN addgroup root docker && \
-    rc-update add docker boot && \
-    service docker start
 
 EXPOSE 8081
 
