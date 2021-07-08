@@ -8,7 +8,6 @@ WORKDIR /tmp/myriad
 RUN curl -OL https://github.com/1Computer1/myriad/releases/download/${MYRIAD_VERSION}/myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
     tar -xzf myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
     rm -f myriad-${MYRIAD_VERSION}-Linux-${GHC_VERSION}.tar.gz && \
-    rc-update add docker boot && \
     service docker start
 
 FROM frolvlad/alpine-glibc:latest
